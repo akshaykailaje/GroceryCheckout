@@ -1,10 +1,5 @@
 package com.example.grocerycheckout.fragments;
 
-import com.example.grocerycheckout.CartItemsAdapter;
-import com.example.grocerycheckout.R;
-import com.example.grocerycheckout.models.Cart;
-import com.google.zxing.integration.android.IntentIntegrator;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,6 +10,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.example.grocerycheckout.CartItemsAdapter;
+import com.example.grocerycheckout.R;
+import com.example.grocerycheckout.ShowCartActivity;
+import com.example.grocerycheckout.interfaces.GroceryCartUpdateListener;
+import com.example.grocerycheckout.models.Cart;
+import com.fortysevendeg.swipelistview.SwipeListView;
+import com.google.zxing.integration.android.IntentIntegrator;
+
 public class ItemListFragment extends Fragment {
 
 	private Cart shoppingCart;
@@ -22,12 +25,14 @@ public class ItemListFragment extends Fragment {
 	// private ListView lvCartItems;
 	// private RelativeLayout rlEmptyCart;
 	private Button btnScan;
+	private GroceryCartUpdateListener listener;
 	
 	public static ItemListFragment newInstance(Cart shoppingCart) {
 		ItemListFragment fragment = new ItemListFragment();
 		
 		Bundle args = new Bundle();
 		args.putSerializable("shoppingCart", shoppingCart);
+		
 		fragment.setArguments(args);
 		
 		return fragment;
@@ -61,9 +66,11 @@ public class ItemListFragment extends Fragment {
 		}
 		
 		shoppingCart = (Cart) getArguments().getSerializable("shoppingCart");
-		cartItemsAdapter = new CartItemsAdapter(getActivity(), shoppingCart.getCartItems());
-		ListView lvCartItems = (ListView) getView().findViewById(R.id.lvCartItems);
-		lvCartItems.setAdapter(cartItemsAdapter);
+		listener = ((ShowCartActivity) getActivity()).getCartUpdateListener();
+		cartItemsAdapter = new CartItemsAdapter(getActivity(), shoppingCart.getCartItems(), listener);
+		SwipeListView slvCartItems = (SwipeListView) getView().findViewById(R.id.lvCartItems);
+		slvCartItems.setAdapter(cartItemsAdapter);
+		slvCartItems.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		
 		if (shoppingCart.getCartItems().size() > 0) {
 			showList();
@@ -72,17 +79,19 @@ public class ItemListFragment extends Fragment {
 	
 	public void showList() {
 		RelativeLayout rlEmptyCart = (RelativeLayout) getView().findViewById(R.id.rlEmptyCart);
-		ListView lvCartItems = (ListView) getView().findViewById(R.id.lvCartItems);
-		lvCartItems.setVisibility(View.VISIBLE);
+		SwipeListView slvCartItems = (SwipeListView) getView().findViewById(R.id.lvCartItems);
+		slvCartItems.setVisibility(View.VISIBLE);
 		rlEmptyCart.setVisibility(View.INVISIBLE);
 	}
 	
 	public void hideList() {
 		RelativeLayout rlEmptyCart = (RelativeLayout) getView().findViewById(R.id.rlEmptyCart);
-		ListView lvCartItems = (ListView) getView().findViewById(R.id.lvCartItems);
-		lvCartItems.setVisibility(View.INVISIBLE);
+		SwipeListView slvCartItems = (SwipeListView) getView().findViewById(R.id.lvCartItems);
+		slvCartItems.setVisibility(View.INVISIBLE);
 		rlEmptyCart.setVisibility(View.VISIBLE);
 	}
+	
+	
 	
 	public Cart getShoppingCart() {
 		return shoppingCart;

@@ -22,6 +22,7 @@ import com.activeandroid.ActiveAndroid;
 import com.example.grocerycheckout.fragments.CartTotalFragment;
 import com.example.grocerycheckout.fragments.ItemListFragment;
 import com.example.grocerycheckout.fragments.ItemLookupFragment;
+import com.example.grocerycheckout.interfaces.GroceryCartUpdateListener;
 import com.example.grocerycheckout.models.Cart;
 import com.example.grocerycheckout.models.CartItem;
 import com.example.grocerycheckout.models.Product;
@@ -43,15 +44,40 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 		productList.add("http://i01.i.aliimg.com/wsphoto/v0/1123663111_4/Free-Shipping-Strawberry-Seeds-6-Color-6-Pack-Each-Pack-50-Seeds-Total-300-Strawberry-Foloer.jpg_50x50.jpg,Organic Strawberries,5,10");
 		productList.add("http://img2.targetimg2.com/wcsstore/TargetSAS//img/p/12/94/12945730_201307221156_50x50.jpg,Ritz Crackers,4.99,50");
 		productList.add("http://cdn2.bigcommerce.com/server300/ac7db/products/83045/images/10180/965_nescof100g__85175.1303164876.120.120.png,Nescafe Instant Coffee,13.99,60");
-		productList.add("http://ratetea.com/images/tea/105.jpg,Lipton Tea,9.99,60");
-		
+		productList.add("http://ratetea.com/images/tea/105.jpg,Lipton Tea,9.99,60");		
+	}
+	
+	
+	private ItemListFragment itemListFragment;
+	private CartTotalFragment cartTotalFragment;
+	private ItemLookupFragment itemLookupFragment;
+	private GroceryCartUpdateListener listener;
+	
+	public GroceryCartUpdateListener getCartUpdateListener() {
+		return new GroceryCartUpdateListener() {
+
+			@Override
+			public void onCartItemDelete(CartItem ci) {
+				// TODO Auto-generated method stub
+				cartTotalFragment.updateTotal();
+			}
+
+			@Override
+			public void onCartItemEdit(CartItem ci) {
+				// TODO Auto-generated method stub
+    			itemListFragment.getShoppingCart().addOrUpdateCartItem(ci);
+    			itemListFragment.getCartItemsAdapter().notifyDataSetChanged();
+    			cartTotalFragment.updateTotal();
+			}
+			
+		};
 	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_cart);
-		
+		listener = getCartUpdateListener();
 		ActiveAndroid.beginTransaction();
         try {
         	for (int i = 0; i < productList.size(); i++) {
@@ -71,7 +97,13 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
         } finally {
         	ActiveAndroid.endTransaction();
         }
-        
+		Cart shoppingCart = new Cart();
+		shoppingCart.setSalesTaxPercentage(7.1d);
+		ProductList list = new ProductList();
+		list.setProductList(Product.getAllProducts());
+		itemListFragment = ItemListFragment.newInstance(shoppingCart);
+		cartTotalFragment = CartTotalFragment.newInstance(shoppingCart);
+		itemLookupFragment = ItemLookupFragment.newInstance(list);
 		setupNavigationTabs();
 		Log.d("DEBUG", "Done create");
 	}
@@ -103,6 +135,7 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 		actionBar.addTab(tabLookup);
 		
 		actionBar.selectTab(tabCart);
+
 	}
 	
 	@Override
@@ -134,11 +167,7 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
     		if (resultCode == RESULT_OK) {
     			CartItem ci = (CartItem) intent.getSerializableExtra("cartItem");
     			Toast.makeText(ShowCartActivity.this, "Item "+ci.getProduct().getName()+" added", Toast.LENGTH_LONG).show();
-    			
-    			ItemListFragment itemListFragment = (ItemListFragment) getSupportFragmentManager().findFragmentByTag("cartItemsFragment");
-    			CartTotalFragment cartTotalFragment = (CartTotalFragment) getSupportFragmentManager().findFragmentByTag("cartTotalFragment");
     			itemListFragment.getShoppingCart().addOrUpdateCartItem(ci);
-    			
     			itemListFragment.getCartItemsAdapter().notifyDataSetChanged();
     			cartTotalFragment.updateTotal();
     			//itemListFragment.showList();
@@ -181,8 +210,8 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 			}
 			
 			fst.addToBackStack(null);
-			fst.add(R.id.llCart, ItemListFragment.newInstance(shoppingCart), "cartItemsFragment");
-			fst.add(R.id.llCart, CartTotalFragment.newInstance(shoppingCart), "cartTotalFragment");
+			fst.add(R.id.llCart, itemListFragment, "cartItemsFragment");
+			fst.add(R.id.llCart, cartTotalFragment, "cartTotalFragment");
 			fst.commitAllowingStateLoss();
 			
 		} else if (tab.getTag().equals("LookupTab")) {
@@ -194,9 +223,8 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 				fst.remove(lookupFragment);
 			}
 			fst.addToBackStack(null);
-			ProductList list = new ProductList();
-			list.setProductList(Product.getAllProducts());
-			fst.replace(R.id.llCart, ItemLookupFragment.newInstance(list), "itemLookupFragment");
+
+			fst.replace(R.id.llCart, itemLookupFragment, "itemLookupFragment");
 			fst.commitAllowingStateLoss();
 		}
 	}
