@@ -1,5 +1,6 @@
 package com.example.grocerycheckout.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * @author akailaje
  *
  */
-public class Cart {
+public class Cart implements Serializable {
 
 	private List<CartItem> cartItems = new ArrayList<CartItem>();
 	private double salesTaxPercentage;
@@ -25,8 +26,14 @@ public class Cart {
 	 * Add a cart item to the cart
 	 * @param cartItem
 	 */
-	public void addCartItem(CartItem cartItem) {
-		this.cartItems.add(cartItem);
+	public void addOrUpdateCartItem(CartItem cartItem) {
+		int index = this.cartItems.indexOf(cartItem);
+		if (index == -1) {
+			this.cartItems.add(cartItem);
+		} else {
+			this.cartItems.get(index).increaseQuantity(cartItem.getQuantity());
+		}
+		
 	}
 	
 	/**
@@ -93,6 +100,10 @@ public class Cart {
 		return listPrice;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("{ salesTaxPercentage: %.2f, itemCount: %d }", getSalesTaxPercentage(), getCartItems().size());
+	}
 	
 	
 	

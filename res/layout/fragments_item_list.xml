@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="250dp" >
+    <RelativeLayout 
+        android:id="@+id/rlEmptyCart"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        
+        <TextView
+            android:id="@+id/tvEmptyCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Cart is Empty"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <ImageView
+            android:id="@+id/ivEmptyCart"
+            android:layout_marginTop="20dp"
+             android:layout_centerHorizontal="true"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_empty_cart"
+            android:contentDescription="Empty Cart"  />
+        <Button 
+            android:id="@+id/btnScan"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Scan New Item"
+        	android:layout_marginTop="20dp"
+        	android:layout_below="@+id/ivEmptyCart"
+        	/>
+        <Button 
+            android:id="@+id/btnLookup"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Lookup Item"
+        	android:layout_below="@+id/ivEmptyCart"
+        	android:layout_toRightOf="@+id/btnScan"
+        	android:layout_alignBaseline="@+id/btnScan" />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/lvCartItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible"
+        android:minHeight="60dp" >
+        <!-- android:background="@drawable/list_border"
+        android:divider="#b5b5b5"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/states_selector_list" -->
+     
+    </ListView>
+</RelativeLayout>
