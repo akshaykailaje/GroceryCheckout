@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
     <ImageView 
@@ -8,26 +8,27 @@
         android:layout_width="30dp" 
         android:layout_height="30dp"
         android:layout_alignParentLeft="true"
-        android:minHeight="30dp" />
+        android:layout_centerInParent="true"
+        android:minHeight="40dp" />
     
     <TextView
          android:id="@+id/tvResultItemName"
-         android:layout_width="wrap_content"
+         android:layout_width="200dp"
          android:layout_height="wrap_content"
-         android:layout_toRightOf="@+id/tvResultItemName"
+         android:layout_toRightOf="@+id/ivResultImage"
          android:layout_alignBaseline="@+id/ivResultImage"
          android:text="Description"
-         android:minHeight="30dp"
+         android:minHeight="40dp"
          android:textAppearance="?android:attr/textAppearanceMedium" />
 
      <TextView
          android:id="@+id/tvResultPrice"
          android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
+         android:layout_height="fill_parent"
          android:layout_toRightOf="@+id/tvResultItemName"
          android:layout_alignBaseline="@+id/ivResultImage"
          android:text="Amount"
-         android:minHeight="30dp"
+         android:minHeight="40dp"
          android:layout_alignParentRight="true"
          android:textAppearance="?android:attr/textAppearanceMedium" />
 

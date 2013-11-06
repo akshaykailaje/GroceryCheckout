@@ -125,7 +125,7 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
     		Log.d("DEBUG", "Returned from barcode scanner");
     		// scan result
     		Log.d("DEBUG", "scan result = " + scanResult.getContents());
-    		Toast.makeText(ShowCartActivity.this, "scan result = " + scanResult.getContents(), Toast.LENGTH_LONG).show();
+    		// Toast.makeText(ShowCartActivity.this, "scan result = " + scanResult.getContents(), Toast.LENGTH_LONG).show();
     		Intent i = new Intent(ShowCartActivity.this, ProductDetailActivity.class);
     		startActivityForResult(i, 1);
     		
@@ -133,7 +133,7 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
     		
     		if (resultCode == RESULT_OK) {
     			CartItem ci = (CartItem) intent.getSerializableExtra("cartItem");
-    			Toast.makeText(ShowCartActivity.this, "Quantity="+ci.getQuantity(), Toast.LENGTH_LONG).show();
+    			Toast.makeText(ShowCartActivity.this, "Item "+ci.getProduct().getName()+" added", Toast.LENGTH_LONG).show();
     			
     			ItemListFragment itemListFragment = (ItemListFragment) getSupportFragmentManager().findFragmentByTag("cartItemsFragment");
     			CartTotalFragment cartTotalFragment = (CartTotalFragment) getSupportFragmentManager().findFragmentByTag("cartTotalFragment");
@@ -141,7 +141,8 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
     			
     			itemListFragment.getCartItemsAdapter().notifyDataSetChanged();
     			cartTotalFragment.updateTotal();
-    			itemListFragment.showList();
+    			//itemListFragment.showList();
+    			getActionBar().selectTab(getActionBar().getTabAt(0));
     			
     		} else if (resultCode == RESULT_CANCELED) {
     			Toast.makeText(ShowCartActivity.this, "No item added", Toast.LENGTH_LONG).show();
@@ -182,7 +183,7 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 			fst.addToBackStack(null);
 			fst.add(R.id.llCart, ItemListFragment.newInstance(shoppingCart), "cartItemsFragment");
 			fst.add(R.id.llCart, CartTotalFragment.newInstance(shoppingCart), "cartTotalFragment");
-			fst.commit();
+			fst.commitAllowingStateLoss();
 			
 		} else if (tab.getTag().equals("LookupTab")) {
 			Log.d("DEBUG", "Lookup tab selected ");
@@ -196,7 +197,7 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 			ProductList list = new ProductList();
 			list.setProductList(Product.getAllProducts());
 			fst.replace(R.id.llCart, ItemLookupFragment.newInstance(list), "itemLookupFragment");
-			fst.commit();
+			fst.commitAllowingStateLoss();
 		}
 	}
 
@@ -211,12 +212,12 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 				fst.remove(lookupFragment);
 			}
 			
-			fst.commit();
+			fst.commitAllowingStateLoss();
 		} else if (tab.getTag().equals("CartTab")) {
 			FragmentTransaction fst = manager.beginTransaction();
 			fst.remove(manager.findFragmentByTag("cartItemsFragment"));
 			fst.remove(manager.findFragmentByTag("cartTotalFragment"));
-			fst.commit();
+			fst.commitAllowingStateLoss();
 		}
 		
 	}

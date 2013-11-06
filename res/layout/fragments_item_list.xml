@@ -32,18 +32,10 @@
         	android:layout_height="wrap_content"
         	android:text="Scan New Item"
         	android:layout_marginTop="20dp"
+        	android:layout_centerHorizontal="true"
         	style="@style/ButtonStyle"
         	android:layout_below="@+id/ivEmptyCart"
         	/>
-        <Button 
-            android:id="@+id/btnLookup"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="Lookup Item"
-        	android:layout_below="@+id/ivEmptyCart"
-        	android:layout_toRightOf="@+id/btnScan"
-        	style="@style/ButtonStyle"
-        	android:layout_alignBaseline="@+id/btnScan" />
     </RelativeLayout>
     <ListView
         android:id="@+id/lvCartItems"

@@ -16,7 +16,11 @@ public class ProductDetailActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product_detail);
 		
-		Product productToDisplay = Product.getSampleProduct();
+		Product productToDisplay = (Product) getIntent().getSerializableExtra("productToDisplay");
+		
+		if (productToDisplay == null) {
+			productToDisplay = Product.getSampleProduct();
+		}
 		
 		FragmentManager manager = getSupportFragmentManager();
 		FragmentTransaction fst = manager.beginTransaction();

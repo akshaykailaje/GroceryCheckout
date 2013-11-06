@@ -88,6 +88,16 @@ public class Product extends Model implements Serializable {
 		Log.d("DEBUG", "total product count in db="+products.size());
 		return products;
 	}
+	
+	public static List<Product> getProductsByNamePattern(String namePattern) {
+		List<Product> products = new Select()
+									.from(Product.class)
+									.orderBy("name")
+									.where("name LIKE '%"+namePattern+"%'")
+									.execute();
+		Log.d("DEBUG", "total product count after filter ("+namePattern+") ="+products.size());
+		return products;
+	}
 
 	public long getInventoryTotal() {
 		return inventoryTotal;
