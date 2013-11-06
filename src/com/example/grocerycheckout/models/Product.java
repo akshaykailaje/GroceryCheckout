@@ -75,13 +75,18 @@ public class Product extends Model implements Serializable {
 	}
 	
 	public static Product getSampleProduct() {
-		List<Product> products = new Select()
-									.from(Product.class)
-									.orderBy("productId")
-									.execute();
-		Log.d("DEBUG", "total product count in db="+products.size());
+		List<Product> products = getAllProducts();
 		int randomIndex = Math.abs(new Random().nextInt() % products.size());
 		return products.get(randomIndex);
+	}
+	
+	public static List<Product> getAllProducts() {
+		List<Product> products = new Select()
+		.from(Product.class)
+		.orderBy("productId")
+		.execute();
+		Log.d("DEBUG", "total product count in db="+products.size());
+		return products;
 	}
 
 	public long getInventoryTotal() {

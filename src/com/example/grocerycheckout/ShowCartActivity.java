@@ -8,6 +8,7 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -20,9 +21,11 @@ import android.widget.Toast;
 import com.activeandroid.ActiveAndroid;
 import com.example.grocerycheckout.fragments.CartTotalFragment;
 import com.example.grocerycheckout.fragments.ItemListFragment;
+import com.example.grocerycheckout.fragments.ItemLookupFragment;
 import com.example.grocerycheckout.models.Cart;
 import com.example.grocerycheckout.models.CartItem;
 import com.example.grocerycheckout.models.Product;
+import com.example.grocerycheckout.models.ProductList;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -69,7 +72,6 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
         	ActiveAndroid.endTransaction();
         }
         
-		FragmentManager manager = getSupportFragmentManager();
 		setupNavigationTabs();
 		Log.d("DEBUG", "Done create");
 	}
@@ -164,10 +166,8 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 		
 		if (tab.getTag().equals("CartTab")) {
 			
-			Fragment cartFragment = manager.findFragmentByTag("cartItemsFragment");
-			
 			FragmentTransaction fst = manager.beginTransaction();
-			
+			Fragment cartFragment = manager.findFragmentByTag("cartItemsFragment");
 			Cart shoppingCart;
 			if (cartFragment == null) {
 				shoppingCart = new Cart();
@@ -179,16 +179,45 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 				fst.remove(cartFragment);
 			}
 			
-			
+			fst.addToBackStack(null);
 			fst.add(R.id.llCart, ItemListFragment.newInstance(shoppingCart), "cartItemsFragment");
 			fst.add(R.id.llCart, CartTotalFragment.newInstance(shoppingCart), "cartTotalFragment");
+			fst.commit();
+			
+		} else if (tab.getTag().equals("LookupTab")) {
+			Log.d("DEBUG", "Lookup tab selected ");
+			FragmentTransaction fst = manager.beginTransaction();
+			
+			Fragment lookupFragment = manager.findFragmentByTag("itemLookupFragment");
+			if (lookupFragment != null) {
+				fst.remove(lookupFragment);
+			}
+			fst.addToBackStack(null);
+			ProductList list = new ProductList();
+			list.setProductList(Product.getAllProducts());
+			fst.replace(R.id.llCart, ItemLookupFragment.newInstance(list), "itemLookupFragment");
 			fst.commit();
 		}
 	}
 
 	@Override
-	public void onTabUnselected(Tab arg0, android.app.FragmentTransaction arg1) {
-		// TODO Auto-generated method stub
+	public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {
+
+		FragmentManager manager = getSupportFragmentManager();
+		if (tab.getTag().equals("LookupTab")) {
+			FragmentTransaction fst = manager.beginTransaction();
+			Fragment lookupFragment = manager.findFragmentByTag("itemLookupFragment");
+			if (lookupFragment != null) {
+				fst.remove(lookupFragment);
+			}
+			
+			fst.commit();
+		} else if (tab.getTag().equals("CartTab")) {
+			FragmentTransaction fst = manager.beginTransaction();
+			fst.remove(manager.findFragmentByTag("cartItemsFragment"));
+			fst.remove(manager.findFragmentByTag("cartTotalFragment"));
+			fst.commit();
+		}
 		
 	}
 

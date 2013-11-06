@@ -97,7 +97,8 @@
          android:layout_below="@+id/tvTotalPriceText"
          android:layout_marginTop="30dp"
          android:layout_marginLeft="10dp"
-         android:text="Cancel" />
+         style="@style/ButtonStyle"
+   		 android:text="Cancel" />
 
      <Button
          android:id="@+id/btnAddItem"
@@ -106,7 +107,8 @@
          android:layout_alignBaseline="@+id/btnCancel"
          android:layout_alignLeft="@+id/tvTotalPrice"
          android:layout_below="@+id/tvTotalPrice"
-         android:text="Add" />
+         style="@style/ButtonStyle"
+   		 android:text="Add" />
 
 </RelativeLayout>
 </ScrollView>

@@ -49,6 +49,7 @@ public class ItemListFragment extends Fragment {
 				
 			}
 		});
+		
 		return v;
 	}
 	

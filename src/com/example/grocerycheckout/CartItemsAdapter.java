@@ -23,7 +23,6 @@ public class CartItemsAdapter extends ArrayAdapter<CartItem> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		CartItem ci= this.getItem(position);
-		// TODO Auto-generated method stub
 		View view = convertView;
 		if (view == null) {
 			LayoutInflater inflater = LayoutInflater.from(getContext());
