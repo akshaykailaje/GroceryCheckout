@@ -47,7 +47,7 @@ public class CartItemsAdapter extends ArrayAdapter<CartItem> {
 			holder = (ViewHolder) view.getTag();
 		}
 
-		holder.tvCartItemPrice.setText("$ " + df.format(ci.getListPrice()));
+		holder.tvCartItemPrice.setText("$ " + df.format(ci.getProduct().getPrice()));
 		holder.tvProductName.setText(ci.getProduct().getName());
 		holder.tvQuantity.setText(String.valueOf(ci.getQuantity()));
 		holder.btnDelete.setOnClickListener(new OnClickListener() {

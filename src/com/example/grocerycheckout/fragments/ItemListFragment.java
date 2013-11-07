@@ -78,10 +78,12 @@ public class ItemListFragment extends Fragment {
 	}
 	
 	public void showList() {
-		RelativeLayout rlEmptyCart = (RelativeLayout) getView().findViewById(R.id.rlEmptyCart);
-		SwipeListView slvCartItems = (SwipeListView) getView().findViewById(R.id.lvCartItems);
-		slvCartItems.setVisibility(View.VISIBLE);
-		rlEmptyCart.setVisibility(View.INVISIBLE);
+		if (getView() != null) {
+			RelativeLayout rlEmptyCart = (RelativeLayout) getView().findViewById(R.id.rlEmptyCart);
+			SwipeListView slvCartItems = (SwipeListView) getView().findViewById(R.id.lvCartItems);
+			slvCartItems.setVisibility(View.VISIBLE);
+			rlEmptyCart.setVisibility(View.INVISIBLE);
+		}
 	}
 	
 	public void hideList() {

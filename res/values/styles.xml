@@ -69,7 +69,9 @@
     </style>
 
     <style name="ListButtonAction">
-        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_height">@dimen/height_item</item>
     </style>
 
     <!-- Settings -->

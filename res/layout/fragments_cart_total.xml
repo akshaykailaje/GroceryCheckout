@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
         android:text="Total"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
      
     <TextView
         android:id="@+id/tvTotal"
@@ -31,7 +31,7 @@
         android:layout_below="@+id/tvTotalText"
         android:layout_marginTop="10dp"
         android:text="Tax@7.00%"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/tvTax"
@@ -66,13 +66,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="35dp"
             android:text="You Pay"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/tvCartTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="53dp"
             android:gravity="right"
             android:text="Amount"
             android:textAppearance="?android:attr/textAppearanceMedium" />

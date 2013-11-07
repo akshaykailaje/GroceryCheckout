@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/ivProfilePic"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_profile_pic" />
+
+    <TextView
+        android:id="@+id/tvFirstNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivProfilePic"
+        android:layout_alignTop="@+id/ivProfilePic"
+        android:layout_marginLeft="30dp"
+        android:text="First Name"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvFirstNameTitle"
+        android:layout_below="@+id/tvFirstNameTitle"
+        android:layout_marginTop="20dp"
+        android:text="Tobias"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvLastNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivProfilePic"
+        android:layout_alignLeft="@+id/tvFirstNameTitle"
+        android:layout_below="@+id/tvFirstName"
+        android:layout_marginTop="20dp"
+        android:text="Last Name"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvFirstNameTitle"
+        android:layout_below="@+id/tvLastNameTitle"
+        android:layout_toRightOf="@+id/ivProfilePic"
+        android:layout_marginTop="20dp"
+        android:text="Funke"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView 
+        android:id="@+id/tvEmailNotice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLastName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Your receipts will be emailed to"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+    <TextView 
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmailNotice"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="foo@bar.com"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView 
+        android:id="@+id/tvReceipts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmail"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:text="Your Recent Transactions"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <ListView
+        android:id="@+id/lvReceipts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvReceipts"
+        android:layout_marginTop="10dp" >
+     </ListView>
+
+</RelativeLayout>
