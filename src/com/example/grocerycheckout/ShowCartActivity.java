@@ -142,8 +142,9 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 	    		startActivityForResult(i, 2);
 			}
 			
-			public void onView() {
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+			public void onView(CartItem ci) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/search?q=" +
+			ci.getProduct().getName()));
 				startActivity(browserIntent);
 			}
 

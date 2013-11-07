@@ -78,7 +78,7 @@ public class CartItemsAdapter extends ArrayAdapter<CartItem> {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				listener.onView();
+				listener.onView(ci);
 			}
 			
 		});
