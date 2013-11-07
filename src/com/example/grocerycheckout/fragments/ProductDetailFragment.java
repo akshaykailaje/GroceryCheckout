@@ -27,6 +27,7 @@ public class ProductDetailFragment extends Fragment {
 	private Product productToDisplay;
 	private static final DecimalFormat df = new DecimalFormat("#.##");
 	private NumberPicker npQuantity;
+	private int currentQuantity;
 	private TextView tvListPrice;
 	private TextView tvTotalPrice;
 	private TextView tvProductDescription;
@@ -34,11 +35,12 @@ public class ProductDetailFragment extends Fragment {
 	private Button btnCancel;
 	private Button btnAddItem;
 	
-	public static ProductDetailFragment newInstance (Product productToDisplay) {
+	public static ProductDetailFragment newInstance (Product productToDisplay, int quantity) {
 		ProductDetailFragment fragment = new ProductDetailFragment();
 		
 		Bundle args = new Bundle();
 		args.putSerializable("productToDisplay", productToDisplay);
+		args.putInt("quantity", quantity);
 		fragment.setArguments(args);
 		
 		return fragment;
@@ -74,6 +76,7 @@ public class ProductDetailFragment extends Fragment {
 		
 		tvTotalPrice.setText(Html.fromHtml("<b>$ " + df.format(productToDisplay.getPrice() * npQuantity.getValue()) + "</b>"));
 		
+		npQuantity.setValue(currentQuantity);
 		npQuantity.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 			@Override
 			public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -116,6 +119,7 @@ public class ProductDetailFragment extends Fragment {
 			return;
 		}
 		productToDisplay = (Product) getArguments().getSerializable("productToDisplay");
+		currentQuantity = getArguments().getInt("quantity");
 		Log.d("DEBUG", "arguments product="+productToDisplay.toString());
 	}
 	

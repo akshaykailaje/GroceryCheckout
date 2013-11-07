@@ -17,14 +17,21 @@ public class ProductDetailActivity extends FragmentActivity {
 		setContentView(R.layout.activity_product_detail);
 		
 		Product productToDisplay = (Product) getIntent().getSerializableExtra("productToDisplay");
+		int quantity =1;
+		
 		
 		if (productToDisplay == null) {
 			productToDisplay = Product.getSampleProduct();
+		} else {
+			if (getIntent().hasExtra("quantity")) {
+				quantity = getIntent().getExtras().getInt("quantity");
+			}
+			
 		}
 		
 		FragmentManager manager = getSupportFragmentManager();
 		FragmentTransaction fst = manager.beginTransaction();
-		fst.add(R.id.flProductDetail, ProductDetailFragment.newInstance(productToDisplay));
+		fst.add(R.id.flProductDetail, ProductDetailFragment.newInstance(productToDisplay, quantity));
 		fst.commit();
 				
 	}

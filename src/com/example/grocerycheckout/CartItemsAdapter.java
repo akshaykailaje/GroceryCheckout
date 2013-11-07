@@ -3,18 +3,19 @@ package com.example.grocerycheckout;
 import java.text.DecimalFormat;
 import java.util.List;
 
-
-import com.example.grocerycheckout.interfaces.GroceryCartUpdateListener;
-import com.example.grocerycheckout.models.CartItem;
-
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.grocerycheckout.interfaces.GroceryCartUpdateListener;
+import com.example.grocerycheckout.models.CartItem;
 
 public class CartItemsAdapter extends ArrayAdapter<CartItem> {
 
@@ -41,7 +42,8 @@ public class CartItemsAdapter extends ArrayAdapter<CartItem> {
 			holder.tvProductName = (TextView) view.findViewById(R.id.tvProductName);
 			holder.tvCartItemPrice = (TextView) view.findViewById(R.id.tvCartItemPrice);
 			holder.btnDelete = (Button) view.findViewById(R.id.btnDelete);
-			
+			holder.btnEdit = (Button) view.findViewById(R.id.btnEdit);
+			holder.btnView = (Button) view.findViewById(R.id.btnView);
 			view.setTag(holder);
 		} else {
 			holder = (ViewHolder) view.getTag();
@@ -60,6 +62,27 @@ public class CartItemsAdapter extends ArrayAdapter<CartItem> {
 			}
 			
 		});
+		
+		holder.btnEdit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				listener.onCartItemEdit(ci);
+			}
+			
+		});
+		
+		holder.btnView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				listener.onView();
+			}
+			
+		});
+		
 		return view;
 	}
 	
@@ -68,6 +91,7 @@ public class CartItemsAdapter extends ArrayAdapter<CartItem> {
         TextView tvQuantity;
         TextView tvProductName;
         Button btnDelete;
-
+        Button btnEdit;
+        Button btnView;
     }
 }

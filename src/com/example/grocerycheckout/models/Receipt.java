@@ -48,7 +48,7 @@ public class Receipt implements Serializable {
 				CartItem ci = new CartItem();
 				ci.setProduct(allProducts.get(new Random().nextInt(allProducts.size() - 1)));
 				ci.setQuantity(1);
-				c.addOrUpdateCartItem(ci);
+				c.addOrUpdateCartItem(ci, 1);
 			}
 			c.setSalesTaxPercentage(7.1d);
 			r.setShoppingCart(c);

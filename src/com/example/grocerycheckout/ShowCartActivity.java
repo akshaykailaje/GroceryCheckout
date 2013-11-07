@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
@@ -135,9 +136,15 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
 			@Override
 			public void onCartItemEdit(CartItem ci) {
 				// TODO Auto-generated method stub
-				itemListFragment.getShoppingCart().addOrUpdateCartItem(ci);
-				itemListFragment.getCartItemsAdapter().notifyDataSetChanged();
-				cartTotalFragment.updateTotal();
+	    		Intent i = new Intent(ShowCartActivity.this, ProductDetailActivity.class);
+	    		i.putExtra("productToDisplay", ci.getProduct());
+	    		i.putExtra("quantity", ci.getQuantity());
+	    		startActivityForResult(i, 2);
+			}
+			
+			public void onView() {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+				startActivity(browserIntent);
 			}
 
 		};
@@ -168,14 +175,14 @@ public class ShowCartActivity extends FragmentActivity implements TabListener {
     		Intent i = new Intent(ShowCartActivity.this, ProductDetailActivity.class);
     		startActivityForResult(i, 1);
     		
-    	} else if (requestCode == 1) { // add item
+    	} else if (requestCode == 1 || requestCode == 2) { // add item
     		
     		if (resultCode == RESULT_OK) {
     			CartItem ci = (CartItem) intent.getSerializableExtra("cartItem");
     			Toast.makeText(ShowCartActivity.this, ci.getProduct().getName()+" added to the cart", Toast.LENGTH_LONG).show();
     			
     			
-    			itemListFragment.getShoppingCart().addOrUpdateCartItem(ci);
+    			itemListFragment.getShoppingCart().addOrUpdateCartItem(ci, requestCode);
     			itemListFragment.getCartItemsAdapter().notifyDataSetChanged();
     			
     			cartTotalFragment.updateTotal();

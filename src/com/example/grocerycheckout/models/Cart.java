@@ -26,12 +26,16 @@ public class Cart implements Serializable {
 	 * Add a cart item to the cart
 	 * @param cartItem
 	 */
-	public void addOrUpdateCartItem(CartItem cartItem) {
+	public void addOrUpdateCartItem(CartItem cartItem, int requestCode) {
 		int index = this.cartItems.indexOf(cartItem);
 		if (index == -1) {
 			this.cartItems.add(cartItem);
 		} else {
-			this.cartItems.get(index).increaseQuantity(cartItem.getQuantity());
+			if (requestCode == 1) {
+				this.cartItems.get(index).increaseQuantity(cartItem.getQuantity());
+			} else {
+				this.cartItems.get(index).setQuantity(cartItem.getQuantity());
+			}
 		}
 		
 	}
